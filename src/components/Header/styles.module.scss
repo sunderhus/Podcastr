@@ -1,0 +1,22 @@
+.container {
+  background: var(--white);
+  height:auto;
+
+  display: flex;
+  align-items: center;
+
+  padding: 3rem 6rem;
+
+  border-bottom: 1px solid var(--gray-100);
+
+  p {
+    margin-left: 3rem;
+    padding: 0.375rem 0 0.375rem 2rem;
+    border-left: 1px solid var(--gray-100);
+  }
+  span{
+    margin-left: auto;
+    text-transform: capitalize;
+  }
+
+}
