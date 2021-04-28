@@ -1,12 +1,13 @@
-import styles from './styles.module.scss'
+import { usePlayer } from '../../hooks/player';
+import styles from './styles.module.scss';
 
 export function Player() {
-
+  const { episodeList } = usePlayer();
   return (
     <div className={styles.container}>
       <header>
-        <img src="playing.svg" alt="Tocando Agora"/>
-        <strong>Tocando Agora</strong>
+        <img src="playing.svg" alt="Tocando Agora" />
+        <strong>Tocando Agora {episodeList && episodeList[0].title}</strong>
       </header>
 
       <div className={styles.emptyPlayer}>
@@ -23,22 +24,22 @@ export function Player() {
         </div>
         <div className={styles.buttons}>
           <button type="button">
-            <img src="/shuffle.svg" alt="Embaralhar"/>
+            <img src="/shuffle.svg" alt="Embaralhar" />
           </button>
           <button type="button">
-            <img src="/play-previous.svg" alt="Tocar anterior"/>
+            <img src="/play-previous.svg" alt="Tocar anterior" />
           </button>
           <button type="button" className={styles.playButton}>
-            <img src="/play.svg" alt="Tocar"/>
+            <img src="/play.svg" alt="Tocar" />
           </button>
           <button type="button">
-            <img src="/play-next.svg" alt="Tocar próxima"/>
+            <img src="/play-next.svg" alt="Tocar próxima" />
           </button>
           <button type="button">
-            <img src="/repeat.svg" alt="Repetir"/>
+            <img src="/repeat.svg" alt="Repetir" />
           </button>
         </div>
       </footer>
     </div>
-  )
+  );
 }

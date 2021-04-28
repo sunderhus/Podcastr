@@ -5,7 +5,7 @@ export function convertDurationToTimeString(duration: number): string {
 
   const finalResult = [hours, minutes, seconds]
     .map(unit => String(unit).padStart(2, '0'))
-    .join(':')
+    .join(':');
 
   return finalResult;
 }
