@@ -1978,6 +1978,18 @@ https-browserify@1.0.0, https-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
 
+husky-init@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/husky-init/-/husky-init-6.1.1.tgz#01bf0cbc56d9de95de74dfe6f051bdcec9db034e"
+  integrity sha512-anN/I+mE8QmISODdrAp43uX7SJa7P2Tf7zhD/aUJgrBzklT8hvdRPj3TuKYrHIkYrMQRKOfObzZifQt/9JF4Sg==
+  dependencies:
+    husky "^6.0.0"
+
+husky@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-6.0.0.tgz#810f11869adf51604c32ea577edbc377d7f9319e"
+  integrity sha512-SQS2gDTB7tBN486QSoKPKQItZw97BMOd+Kdb6ghfpBc0yXyzrddI0oDV5MkDAbuB4X2mO3/nj60TRMcYxwzZeQ==
+
 iconv-lite@0.4.24:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
