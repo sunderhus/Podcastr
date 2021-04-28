@@ -1,4 +1,4 @@
-export function convertDurationToTimeString(duration: number): string {
+const convertDurationToTimeString = (duration: number): string => {
   const hours = Math.floor(duration / 3600);
   const minutes = Math.floor((duration % 3600) / 60);
   const seconds = duration % 60;
@@ -8,4 +8,6 @@ export function convertDurationToTimeString(duration: number): string {
     .join(':');
 
   return finalResult;
-}
+};
+
+export default convertDurationToTimeString;

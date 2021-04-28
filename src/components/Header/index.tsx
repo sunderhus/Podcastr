@@ -3,12 +3,12 @@ import ptBR from 'date-fns/locale/pt-BR';
 import { useMemo } from 'react';
 import styles from './styles.module.scss';
 
-export const Header: React.FC = () => {
+const Header: React.FC = () => {
   const currentDate = useMemo(() => {
     return format(new Date(), 'EEEEEE, d MMMM', {
       locale: ptBR,
     });
-  }, [format, ptBR]);
+  }, []);
 
   return (
     <header className={styles.container}>
@@ -18,3 +18,5 @@ export const Header: React.FC = () => {
     </header>
   );
 };
+
+export default Header;

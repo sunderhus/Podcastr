@@ -3,8 +3,8 @@ import ptBR, { format, parseISO } from 'date-fns';
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
 import Image from 'next/image';
-import { api } from '../services/api';
-import { convertDurationToTimeString } from '../utils/convertDurationToTimeString';
+import api from '../services/api';
+import convertDurationToTimeString from '../utils/convertDurationToTimeString';
 import styles from './home.module.scss';
 import { usePlayer } from '../hooks/player';
 
@@ -13,8 +13,8 @@ type Episode = {
   title: string;
   thumbnail: string;
   members: string;
-  published_at: string;
   publishedAt: string;
+  publishedAtFormatted: string;
   durationAsString: string;
   url: string;
   file: {
@@ -69,11 +69,11 @@ const Home: React.FC<HomeProps> = ({ allEpisodes, latestEpisodes }) => {
           <thead>
             <tr>
               <th colSpan={1}>Podcast</th>
-              <th />
+              <th> </th>
               <th>Integrantes</th>
               <th style={{ width: 100 }}>Data</th>
               <th>Duração</th>
-              <th />
+              <th> </th>
             </tr>
           </thead>
           <tbody>
@@ -90,7 +90,9 @@ const Home: React.FC<HomeProps> = ({ allEpisodes, latestEpisodes }) => {
                     />
                   </td>
                   <td>
-                    <Link href={`/episodes/${episodes.id}`}>{episodes.title}</Link>
+                    <Link href={`/episodes/${episodes.id}`}>
+                      {episodes.title}
+                    </Link>
                   </td>
                   <td>{episodes.members}</td>
                   <td>{episodes.publishedAt}</td>
@@ -116,7 +118,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get<Episode[]>('episodes', {
     params: {
       _limit: 12,
-      _sort: 'published_at',
+      _sort: 'publishedAt',
       _order: 'desc',
     },
   });
@@ -124,11 +126,15 @@ export const getStaticProps: GetStaticProps = async () => {
   const episodes = data.map(episode => {
     return {
       ...episode,
-      publishedAt: format(parseISO(episode.published_at), 'd MMM yy', { locale: ptBR }),
+      publishedAtFormatted: format(parseISO(episode.publishedAt), 'd MMM yy', {
+        locale: ptBR,
+      }),
       file: {
         duration: Number(episode.file.duration),
       },
-      durationAsString: convertDurationToTimeString(Number(episode.file.duration)),
+      durationAsString: convertDurationToTimeString(
+        Number(episode.file.duration),
+      ),
     };
   });
   const latestEpisodes = episodes.slice(0, 2);

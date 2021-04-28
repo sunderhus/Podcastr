@@ -24,8 +24,11 @@
     "prettier"
   ],
   "rules": {
+    "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
+    "react/no-danger": "off",
     "prettier/prettier": "error",
+    "import/no-duplicates": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
     "react/jsx-filename-extension": [
@@ -48,7 +51,7 @@
         "ts": "never",
         "tsx": "never"
       }
-   ]
+    ]
   },
   "settings": {
     "import/resolver": {

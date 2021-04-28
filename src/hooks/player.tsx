@@ -30,7 +30,9 @@ const PlayerProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <PlayerContext.Provider value={{ episodeList: data.episodeList, currentEpisodeIndex: 0, play }}>
+    <PlayerContext.Provider
+      value={{ episodeList: data.episodeList, currentEpisodeIndex: 0, play }}
+    >
       {children}
     </PlayerContext.Provider>
   );

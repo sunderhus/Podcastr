@@ -1,12 +1,10 @@
 import ptBR, { format, parseISO } from 'date-fns';
-
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
-import { api } from '../../services/api';
-import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
+import api from '../../services/api';
+import convertDurationToTimeString from '../../utils/convertDurationToTimeString';
 import styles from './episode.module.scss';
 
 interface Episode {
@@ -14,8 +12,8 @@ interface Episode {
   title: string;
   thumbnail: string;
   members: string;
-  published_at: string;
   publishedAt: string;
+  publishedAtFormatted: string;
   durationAsString: string;
   description: string;
   url: string;
@@ -29,8 +27,6 @@ interface EpisodeProps {
 }
 
 const Episode: React.FC<EpisodeProps> = ({ episode }) => {
-  const router = useRouter();
-
   return (
     <div className={styles.episode}>
       <div className={styles.thumbnailContainer}>
@@ -53,7 +49,7 @@ const Episode: React.FC<EpisodeProps> = ({ episode }) => {
       <header>
         <h1>{episode.title}</h1>
         <span>{episode.members}</span>
-        <span>{episode.publishedAt}</span>
+        <span>{episode.publishedAtFormatted}</span>
         <span>{episode.durationAsString}</span>
       </header>
 
@@ -71,7 +67,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await api.get<Episode[]>('episodes', {
     params: {
       _limit: 12,
-      _sort: 'published_at',
+      _sort: 'publishedAt',
       _order: 'desc',
     },
   });
@@ -97,7 +93,7 @@ export const getStaticProps: GetStaticProps = async ctx => {
 
   const episode = {
     ...data,
-    publishedAt: format(parseISO(data.published_at), 'd MMM yy', {
+    publishedAtFormatted: format(parseISO(data.publishedAt), 'd MMM yy', {
       locale: ptBR,
     }),
     file: {

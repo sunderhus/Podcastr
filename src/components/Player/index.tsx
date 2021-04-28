@@ -1,7 +1,7 @@
 import { usePlayer } from '../../hooks/player';
 import styles from './styles.module.scss';
 
-export function Player() {
+const Player: React.FC = () => {
   const { episodeList } = usePlayer();
   return (
     <div className={styles.container}>
@@ -42,4 +42,6 @@ export function Player() {
       </footer>
     </div>
   );
-}
+};
+
+export default Player;
