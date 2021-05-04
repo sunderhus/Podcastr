@@ -17,14 +17,9 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "react-hooks",
-    "@typescript-eslint",
-    "prettier"
-  ],
+  "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
-    "jsx-a11y/media-has-caption":"off",
+    "jsx-a11y/media-has-caption": "off",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
     "react/no-danger": "off",
@@ -35,15 +30,11 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [
-          ".tsx"
-        ]
+        "extensions": [".tsx"]
       }
     ],
     "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": [
-      "error"
-    ],
+    "@typescript-eslint/no-use-before-define": ["error"],
     "react/react-in-jsx-scope": "off",
     "import/extensions": [
       "error",
