@@ -24,6 +24,7 @@
     "prettier"
   ],
   "rules": {
+    "jsx-a11y/media-has-caption":"off",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
     "react/no-danger": "off",

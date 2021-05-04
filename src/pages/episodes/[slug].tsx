@@ -1,8 +1,10 @@
 import ptBR, { format, parseISO } from 'date-fns';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
+import Head from 'next/head';
 import Link from 'next/link';
 import { ParsedUrlQuery } from 'querystring';
+import { usePlayer } from '../../hooks/player';
 import api from '../../services/api';
 import convertDurationToTimeString from '../../utils/convertDurationToTimeString';
 import styles from './episode.module.scss';
@@ -16,10 +18,7 @@ interface Episode {
   publishedAtFormatted: string;
   durationAsString: string;
   description: string;
-  url: string;
-  file: {
-    duration: number;
-  };
+  file: { url: string; duration: number };
 }
 
 interface EpisodeProps {
@@ -27,8 +26,12 @@ interface EpisodeProps {
 }
 
 const Episode: React.FC<EpisodeProps> = ({ episode }) => {
+  const { play } = usePlayer();
   return (
     <div className={styles.episode}>
+      <Head>
+        <title>PoadCastr - {episode.title}</title>
+      </Head>
       <div className={styles.thumbnailContainer}>
         <Link href="/">
           <button type="button">
@@ -41,7 +44,7 @@ const Episode: React.FC<EpisodeProps> = ({ episode }) => {
           src={episode.thumbnail}
           objectFit="cover"
         />
-        <button type="button">
+        <button type="button" onClick={() => play(episode)}>
           <img src="/play.svg" alt="Tocar episódio" />
         </button>
       </div>
@@ -96,9 +99,8 @@ export const getStaticProps: GetStaticProps = async ctx => {
     publishedAtFormatted: format(parseISO(data.publishedAt), 'd MMM yy', {
       locale: ptBR,
     }),
-    file: {
-      duration: Number(data.file.duration),
-    },
+    url: data.file.url,
+    duration: Number(data.file.duration),
     durationAsString: convertDurationToTimeString(Number(data.file.duration)),
   };
 

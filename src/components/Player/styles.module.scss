@@ -26,8 +26,28 @@
   footer {
     align-self: stretch;
     &.empty {
-      opacity: 0.6;
+      opacity: 0.5;
     }
+  }
+}
+
+.currentEpisode {
+  text-align: center;
+  img {
+    border-radius: 2.4rem;
+  }
+  strong {
+    display: block;
+    margin-top: 3.2rem;
+    font: 600 2rem Lexend, sans-serif;
+    line-height: 2, 72rem;
+  }
+
+  span {
+    display: block;
+    margin-top: 1.6rem;
+    opacity: 0.6;
+    line-height: 2.4rem;
   }
 }
 
@@ -79,12 +99,31 @@
     background: transparent;
     border: 0;
     font-size: 0;
+    transition: filter 0.2s linear;
+    &:hover:not(:disabled) {
+      filter: brightness(0.8);
+    }
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.25;
+    }
 
-    &.playButton{
-      width:6rem;
-      height:6rem;
+    &.playButton {
+      width: 6rem;
+      height: 6rem;
       border-radius: 1.6rem;
       background: var(--purple-400);
+      &:hover {
+        filter: brightness(0.95);
+      }
+    }
+
+    &.isActive {
+      filter: invert(0.35) sepia(1) saturate(3) hue-rotate(100deg);
+
+      &:hover {
+        filter: brightness(0.95);
+      }
     }
   }
 }

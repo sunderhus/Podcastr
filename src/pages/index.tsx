@@ -2,7 +2,9 @@ import ptBR, { format, parseISO } from 'date-fns';
 
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import Image from 'next/image';
+import { useMemo } from 'react';
 import api from '../services/api';
 import convertDurationToTimeString from '../utils/convertDurationToTimeString';
 import styles from './home.module.scss';
@@ -16,8 +18,8 @@ type Episode = {
   publishedAt: string;
   publishedAtFormatted: string;
   durationAsString: string;
-  url: string;
   file: {
+    url: string;
     duration: number;
   };
 };
@@ -28,14 +30,23 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ allEpisodes, latestEpisodes }) => {
-  const { play } = usePlayer();
+  const { playList } = usePlayer();
+  const episodesList = [...latestEpisodes, ...allEpisodes];
+  const memoLatestEpisodesLength = useMemo(() => {
+    return latestEpisodes.length;
+  }, [latestEpisodes.length]);
+
   return (
     <div className={styles.homepage}>
+      <Head>
+        <title>PoadCastr - Home </title>
+      </Head>
+
       <section className={styles.latestEpisodes}>
-        <h2>Últimos lançamentos</h2>
+        <h2>Últimos lançamentos </h2>
 
         <ul>
-          {latestEpisodes.map(episode => {
+          {latestEpisodes.map((episode, index) => {
             return (
               <li key={episode.id}>
                 <Image
@@ -53,7 +64,10 @@ const Home: React.FC<HomeProps> = ({ allEpisodes, latestEpisodes }) => {
                   <span>{episode.durationAsString}</span>
                 </div>
 
-                <button type="button" onClick={() => play(episode)}>
+                <button
+                  type="button"
+                  onClick={() => playList(episodesList, index)}
+                >
                   <img src="/play-green.svg" alt="tocar episódio" />
                 </button>
               </li>
@@ -77,28 +91,33 @@ const Home: React.FC<HomeProps> = ({ allEpisodes, latestEpisodes }) => {
             </tr>
           </thead>
           <tbody>
-            {allEpisodes.map(episodes => {
+            {allEpisodes.map((episode, index) => {
               return (
-                <tr key={episodes.id}>
+                <tr key={episode.id}>
                   <td>
                     <Image
                       width={120}
                       height={120}
-                      src={episodes.thumbnail}
-                      alt={episodes.title}
+                      src={episode.thumbnail}
+                      alt={episode.title}
                       objectFit="cover"
                     />
                   </td>
                   <td>
-                    <Link href={`/episodes/${episodes.id}`}>
-                      {episodes.title}
+                    <Link href={`/episodes/${episode.id}`}>
+                      {episode.title}
                     </Link>
                   </td>
-                  <td>{episodes.members}</td>
-                  <td>{episodes.publishedAt}</td>
-                  <td>{episodes.durationAsString}</td>
+                  <td>{episode.members}</td>
+                  <td>{episode.publishedAt}</td>
+                  <td>{episode.durationAsString}</td>
                   <td>
-                    <button type="button">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        playList(episodesList, memoLatestEpisodesLength + index)
+                      }
+                    >
                       <img src="/play-green.svg" alt="Tocar episódio" />
                     </button>
                   </td>
@@ -129,9 +148,6 @@ export const getStaticProps: GetStaticProps = async () => {
       publishedAtFormatted: format(parseISO(episode.publishedAt), 'd MMM yy', {
         locale: ptBR,
       }),
-      file: {
-        duration: Number(episode.file.duration),
-      },
       durationAsString: convertDurationToTimeString(
         Number(episode.file.duration),
       ),
@@ -139,7 +155,6 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   const latestEpisodes = episodes.slice(0, 2);
   const allEpisodes = episodes.slice(2, episodes.length);
-
   return {
     props: {
       allEpisodes,
